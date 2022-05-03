@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 typedef uint16_t WORD;
-typedef uint32_t DWORD;
+typedef uint32_t DWORD; // double word
 typedef int32_t LONG;
 
 // https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
@@ -14,7 +14,7 @@ typedef struct tagBITMAPFILEHEADER
     DWORD bfOffBits;
 } BITMAPFILEHEADER, *LPBITMAPFILEHEADER, *PBITMAPFILEHEADER;
 
-// https://docs.microsoft.com/pl-pl/previous-versions/dd183376(v=vs.85)
+// // https://docs.microsoft.com/pl-pl/previous-versions/dd183376(v=vs.85)
 typedef struct tagBITMAPINFOHEADER
 {
     DWORD biSize;
@@ -29,3 +29,11 @@ typedef struct tagBITMAPINFOHEADER
     DWORD biClrUsed;
     DWORD biClrImportant;
 } BITMAPINFOHEADER, *LPBITMAPINFOHEADER, *PBITMAPINFOHEADER;
+
+typedef struct tagBITMAPGRB // moze przydatne na 4
+{
+    unsigned char rgbBlue;
+    unsigned char rgbGreen;
+    unsigned char rgbRed;
+    // unsigned char rgbReserved;
+} BITMAPRGB;
