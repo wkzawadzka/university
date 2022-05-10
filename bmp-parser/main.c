@@ -2,8 +2,17 @@
 #include <stdlib.h>
 #include "main.h"
 
+/* Weronika Zawadzka 151943 & Eliza Czaplicka 151963 */
+
 BITMAPFILEHEADER fileHeader;
 BITMAPINFOHEADER infoHeader;
+unsigned char *bitmap = 0;
+float blue[16] = {0};
+float red[16] = {0};
+float green[16] = {0};
+float blue_c = 0;
+float green_c = 0;
+float red_c = 0;
 
 void header_reader(FILE *file)
 {
@@ -33,10 +42,10 @@ void BMP_header_print()
 {
     printf("\nBITMAPFILEHEADER:\n");
     printf("   bfType：               0x%x (BM)\n", fileHeader.bfType);
-    printf("   bfSize：               %d\n", fileHeader.bfSize);        // 4 byte
-    printf("   bfReserved1：          0x%x\n", fileHeader.bfReserved1); // 2 byte
-    printf("   bfReserved2：          0x%x\n", fileHeader.bfReserved2); // 2 byte
-    printf("   bfOffBits:             %d\n", fileHeader.bfOffBits);     // 4 bytes
+    printf("   bfSize：               %d\n", fileHeader.bfSize);
+    printf("   bfReserved1：          0x%x\n", fileHeader.bfReserved1);
+    printf("   bfReserved2：          0x%x\n", fileHeader.bfReserved2);
+    printf("   bfOffBits:             %d\n", fileHeader.bfOffBits);
 }
 
 void BMP_info_print()
@@ -55,34 +64,108 @@ void BMP_info_print()
     printf("   biClrImportant:        %d\n", infoHeader.biClrImportant);
 }
 
-void RGB_histogram() // for grade 4 -> to complete
+int get_value(int value)
 {
-    // Pixel array is stored as a sequence of rows. Each row has length equal to:
-    int pixel_array_len = (((infoHeader.biBitCount * infoHeader.biWidth) + 31) / 32) * 4;
+    int i;
+    int iteration = 0;
+    for (i = 0; i <= 240; i += 16)
+    {
+        if ((i <= value) && (value <= i + 15))
+        {
+            return iteration;
+        }
+        iteration++;
+    }
 }
 
-// $ ./program PATH-TO-INPUT-BMP-FILE PATH-TO-OUTPUT-BMP-FILE
+void histogram(int B, int G, int R)
+{
+    red[get_value(R)]++;
+    green[get_value(G)]++;
+    blue[get_value(B)]++;
+    red_c++;
+    green_c++;
+    blue_c++;
+}
+
+void RGB_reader(FILE *file)
+{
+    int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight;
+    int padding = infoHeader.biWidth % 4;
+    bitmap = malloc(size);
+    fread(bitmap, 1, size, file);
+
+    for (int row = infoHeader.biHeight - 1; row >= 0; row--)
+    {
+        for (int col = 0; col < infoHeader.biWidth; col++)
+        {
+            int pos = (row * infoHeader.biWidth + col) * 3 + row * padding;
+            histogram(bitmap[pos], bitmap[pos + 1], bitmap[pos + 2]);
+        }
+    }
+}
+
+void print_histogram()
+{
+    printf("\nBlue:\n");
+    int i = 0;
+    int j;
+    float percentage;
+    for (j = 0; j < 16; j++)
+    {
+        percentage = (blue[j] / blue_c) * 100;
+        printf("   %d-%d: %.2f%%\n", i, i + 15, percentage);
+        i += 16;
+    }
+    i = 0;
+    printf("\nGreen:\n");
+    for (j = 0; j < 16; j++)
+    {
+        percentage = (green[j] / green_c) * 100;
+        printf("   %d-%d: %.2f%%\n", i, i + 15, percentage);
+        i += 16;
+    }
+    i = 0;
+    printf("\nRed:\n");
+    for (j = 0; j < 16; j++)
+    {
+        percentage = (red[j] / red_c) * 100;
+        printf("   %d-%d: %.2f%%\n", i, i + 15, percentage);
+        i += 16;
+    }
+}
+
 int main(int argc, char *argv[])
 {
     FILE *file;
-    uint16_t bfType;
     file = fopen(argv[1], "rb");
     if (file == NULL)
     {
         printf("Error: File cannot be opened.\n");
         return 1;
     }
+    // 3.0 header
     header_reader(file);
+    if (fileHeader.bfType != 0x4D42)
+    {
+        printf("Not a BMP file.");
+        return 1;
+    }
     BMP_header_print(fileHeader);
+
+    // 3.5 info header
     info_reader(file);
     BMP_info_print(infoHeader);
 
+    // 4.0 histogram
     if (!(infoHeader.biCompression == 0 && infoHeader.biBitCount == 24))
     {
-        printf("Unsuported type for RGB hisotgram.\n");
+        printf("Unsuported type for RGB histogram.\n");
         return 1;
     }
+    RGB_reader(file);
+    print_histogram();
 
-    // closing bmp file
     fclose(file);
+    free(bitmap);
 }
