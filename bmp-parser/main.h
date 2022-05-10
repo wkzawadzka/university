@@ -3,6 +3,7 @@
 typedef uint16_t WORD;
 typedef uint32_t DWORD; // double word
 typedef int32_t LONG;
+typedef uint8_t BYTE;
 
 // https://docs.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapfileheader
 typedef struct tagBITMAPFILEHEADER
@@ -30,10 +31,9 @@ typedef struct tagBITMAPINFOHEADER
     DWORD biClrImportant;
 } BITMAPINFOHEADER, *LPBITMAPINFOHEADER, *PBITMAPINFOHEADER;
 
-typedef struct tagBITMAPGRB // moze przydatne na 4
+typedef struct tagBITMAPGRB
 {
     unsigned char rgbBlue;
     unsigned char rgbGreen;
     unsigned char rgbRed;
-    // unsigned char rgbReserved;
 } BITMAPRGB;
