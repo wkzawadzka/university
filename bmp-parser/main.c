@@ -3,16 +3,18 @@
 #include "main.h"
 
 /* Weronika Zawadzka 151943 & Eliza Czaplicka 151963 */
+// ANNOTADED
 
 BITMAPFILEHEADER fileHeader;
 BITMAPINFOHEADER infoHeader;
 unsigned char *bitmap = 0;
-float blue[16] = {0};
+float blue[16] = {0}; // initializing a list of length 16 with all 0: [0,0,0,0,0...0]
 float red[16] = {0};
 float green[16] = {0};
 float blue_c = 0;
 float green_c = 0;
 float red_c = 0;
+// all floats so we can multiply divide etc. them (needed with percentges later)
 
 void header_reader(FILE *file)
 {
@@ -21,6 +23,9 @@ void header_reader(FILE *file)
     fread(&fileHeader.bfReserved1, 1, sizeof(WORD), file);
     fread(&fileHeader.bfReserved2, 1, sizeof(WORD), file);
     fread(&fileHeader.bfOffBits, 1, sizeof(DWORD), file);
+    // actually I have seen people doing this in one line but it did not worked for me XD 
+    // like fread(fileHeader, x, sizeof(FileHeader), file) sth like that
+    // but reading individually is better i think, if we asks why we can talk about the memory, padding etc
 }
 
 void info_reader(FILE *file)
@@ -64,7 +69,7 @@ void BMP_info_print()
     printf("   biClrImportant:        %d\n", infoHeader.biClrImportant);
 }
 
-int get_value(int value)
+int get_value(int value) // serach for correct place in list (connected with percentages)
 {
     int i;
     int iteration = 0;
@@ -90,10 +95,11 @@ void histogram(int B, int G, int R)
 
 void RGB_reader(FILE *file)
 {
-    int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight;
+    int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight; // first part is exactly what we wrote in exercise
+    // but time *biHeight and padding below is copied so idk why yet
     int padding = infoHeader.biWidth % 4;
     bitmap = malloc(size);
-    fread(bitmap, 1, size, file);
+    fread(bitmap, 1, size, file); // read one by one to the end of RGB section of size size so bitmap = [B1, G1, R1, B2, R2, G2...] and somewhere padding
 
     for (int row = infoHeader.biHeight - 1; row >= 0; row--)
     {
@@ -146,7 +152,7 @@ int main(int argc, char *argv[])
     }
     // 3.0 header
     header_reader(file);
-    if (fileHeader.bfType != 0x4D42)
+    if (fileHeader.bfType != 0x4D42) // 0x4D42 means bitmap
     {
         printf("Not a BMP file.");
         return 1;
@@ -169,3 +175,4 @@ int main(int argc, char *argv[])
     fclose(file);
     free(bitmap);
 }
+// oh i forgot about return 0; at the end but it works :O
