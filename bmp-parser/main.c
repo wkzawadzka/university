@@ -96,7 +96,7 @@ void RGB_reader(FILE *file)
     // first part is from exercise pdf * height to get the size
     int padding = infoHeader.biWidth % 4; // actually here it gives nothing as width is always mutiple of four for given bmp files
     bitmap = malloc(size);
-    fread(bitmap, 1, size, file); // read one by one to the end of RGB section of size size so bitmap = [B1, G1, R1, B2, R2, G2...] and somewhere padding
+    fread(bitmap, 1, size, file); // read one by one to the end of RGB section of size size
 
     for (int row = infoHeader.biHeight - 1; row >= 0; row--)
     {
