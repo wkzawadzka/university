@@ -23,9 +23,6 @@ void header_reader(FILE *file)
     fread(&fileHeader.bfReserved1, 1, sizeof(WORD), file);
     fread(&fileHeader.bfReserved2, 1, sizeof(WORD), file);
     fread(&fileHeader.bfOffBits, 1, sizeof(DWORD), file);
-    // actually I have seen people doing this in one line but it did not worked for me XD 
-    // like fread(fileHeader, x, sizeof(FileHeader), file) sth like that
-    // but reading individually is better i think, if we asks why we can talk about the memory, padding etc
 }
 
 void info_reader(FILE *file)
@@ -95,9 +92,9 @@ void histogram(int B, int G, int R)
 
 void RGB_reader(FILE *file)
 {
-    int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight; // first part is exactly what we wrote in exercise
-    // but time *biHeight and padding below is copied so idk why yet
-    int padding = infoHeader.biWidth % 4;
+    int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight; 
+    // first part is from exercise pdf * height to get the size
+    int padding = infoHeader.biWidth % 4; // actually here it gives nothing as width is always mutiple of four for given bmp files
     bitmap = malloc(size);
     fread(bitmap, 1, size, file); // read one by one to the end of RGB section of size size so bitmap = [B1, G1, R1, B2, R2, G2...] and somewhere padding
 
