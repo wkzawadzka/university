@@ -6,7 +6,7 @@ Some of projects/tasks realized during AI Bachelor programme.
 # Contents
  1. [INI parser](#ini-parser)
  2. [BMP parser](#bmp-parser) 
- 3. [Sorthing algorithms](#sorting-algorithms)
+ 3. [Sorting algorithms](#sorting-algorithms)
 
 
  
@@ -20,7 +20,7 @@ C program to parse BMP files. The program accepts one command line parameter in 
 ```$ ./program PATH-TO-BMP-FILE```
 Prints parsed values and computes histogram of RGB colors.
 
-## sorthing algorithms
+## sorting-algorithms
 Written in C. Experiments visualized using matplotlib. Includes following sorting algorithms:
 - bubble sort
 - merge sort
