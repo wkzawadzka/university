@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include "main.h"
 
-/* Weronika Zawadzka 151943 & Eliza Czaplicka 151963 */
-// ANNOTADED
+/* authors
+@wkzawadzka
+@elissa-c
+*/
 
 BITMAPFILEHEADER fileHeader;
 BITMAPINFOHEADER infoHeader;
@@ -14,7 +16,6 @@ float green[16] = {0};
 float blue_c = 0;
 float green_c = 0;
 float red_c = 0;
-// all floats so we can multiply divide etc. them (needed with percentges later)
 
 void header_reader(FILE *file)
 {
@@ -66,7 +67,7 @@ void BMP_info_print()
     printf("   biClrImportant:        %d\n", infoHeader.biClrImportant);
 }
 
-int get_value(int value) // serach for correct place in list (connected with percentages)
+int get_value(int value) // serach for correct place in list
 {
     int i;
     int iteration = 0;
@@ -93,10 +94,9 @@ void histogram(int B, int G, int R)
 void RGB_reader(FILE *file)
 {
     int size = ((infoHeader.biWidth * infoHeader.biBitCount + 31) / 32) * 4 * infoHeader.biHeight; 
-    // first part is from exercise pdf * height to get the size
     int padding = infoHeader.biWidth % 4; // actually here it gives nothing as width is always mutiple of four for given bmp files
     bitmap = malloc(size);
-    fread(bitmap, 1, size, file); // read one by one to the end of RGB section of size size
+    fread(bitmap, 1, size, file);
 
     for (int row = infoHeader.biHeight - 1; row >= 0; row--)
     {
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         printf("Error: File cannot be opened.\n");
         return 1;
     }
-    // 3.0 header
+    // header
     header_reader(file);
     if (fileHeader.bfType != 0x4D42) // 0x4D42 means bitmap
     {
@@ -156,11 +156,11 @@ int main(int argc, char *argv[])
     }
     BMP_header_print(fileHeader);
 
-    // 3.5 info header
+    // info header
     info_reader(file);
     BMP_info_print(infoHeader);
 
-    // 4.0 histogram
+    // histogram
     if (!(infoHeader.biCompression == 0 && infoHeader.biBitCount == 24))
     {
         printf("Unsuported type for RGB histogram.\n");
@@ -171,5 +171,5 @@ int main(int argc, char *argv[])
 
     fclose(file);
     free(bitmap);
+    return 0;
 }
-// oh i forgot about return 0; at the end but it works :O
