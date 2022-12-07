@@ -4,7 +4,8 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-// ANNOTATED
+// Author @wezawadzka
+
 struct data_struct
 {
     char *sectionname;
@@ -99,7 +100,7 @@ int main(int argc, char *argv[])
     while (fgets(buffer, sizeof(buffer), file) != NULL) // to the end of file
     {
         // DYNAMIC memory allocation here means we can use arbitrarily long file as:
-        // we fill 100 lines, then make memory for another 100 ones, and so on..
+        // we fill 100 lines, then make memory for another 100 ones, and so on
         if (i == lenght)
         {
             // it means all 100 lines
@@ -175,5 +176,4 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-// when he talked about making structs i guess the ides was that all sections could be strored there and theirs keys, but well
-// it was the first time i used structs and its still success as it is XD
+
