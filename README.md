@@ -45,4 +45,6 @@ Written in C. Experiments visualized using matplotlib. Searching, deleting inser
  ## mathematical-roses
  Mathematical roses written in p5js inspired by [Wikipedia's picture](https://en.wikipedia.org/wiki/Rose_%28mathematics%29). 
  
+ <img src="mathematical-roses/roses.png" alt= “” width="350" height="450">
+ 
  ![](linebreak.png)
