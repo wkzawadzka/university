@@ -8,6 +8,7 @@ Some of projects/tasks realized during AI Bachelor programme.
  2. [BMP parser](#bmp-parser) 
  3. [Sorting algorithms](#sorting-algorithms)
  4. [BST, BBST and Linked Lists](#trees)
+ 5. [Mathematical roses in JavaScript](#mathematical-roses)
 
 
  
@@ -40,3 +41,8 @@ Written in C. Experiments visualized using matplotlib. Includes following sortin
 Written in C. Experiments visualized using matplotlib. Searching, deleting inserting to BST, BBST and Linked List. Preorder, postorder, inorder printing.
 
 ![](linebreak.png)
+
+ ## mathematical-roses
+ Mathematical roses written in p5js inspired by [Wikipedia's picture](https://en.wikipedia.org/wiki/Rose_%28mathematics%29). 
+ 
+ ![](linebreak.png)
