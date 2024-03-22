@@ -14,6 +14,8 @@ Some of the smaller projects/tasks realized during AI Bachelor programme at PUT 
 6.  [Maurer roses in JavaScript](#maurer-rose)
 7.  [LERP game](#lerp-game)
 8.  [MiR100 robot & SLAM algorithm](#slam-robot)
+9.  [Wildlife simulator: preys & predators](#wildlife-simulator-java)
+10. [Zoo system](#zoo-project)
 
 ## ini-parser
 
@@ -96,5 +98,17 @@ We first performed SLAM using hector_mapping with explore_lite and then using cr
 <p align="center" width="100%">
     <img width="100%" src="mir-robot/graph.png">
 </p>
+
+![](linebreak.png)
+
+## wildlife-simulator-java
+
+A wildlife simulator of seals (predators) and penguins (preys) written in Java.
+
+![](linebreak.png)
+
+## zoo-project
+
+Beginner level project in C++ - a zoo system, where you can add, remove or breed animals and keep information about them.
 
 ![](linebreak.png)
