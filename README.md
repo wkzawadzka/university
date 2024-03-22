@@ -16,6 +16,7 @@ Some of the smaller projects/tasks realized during AI Bachelor programme at PUT 
 8.  [MiR100 robot & SLAM algorithm](#slam-robot)
 9.  [Wildlife simulator: preys & predators](#wildlife-simulator-java)
 10. [Zoo system](#zoo-project)
+11. [Producer consumer problem](#producer-consumer)
 
 ## ini-parser
 
@@ -110,5 +111,11 @@ A wildlife simulator of seals (predators) and penguins (preys) written in Java.
 ## zoo-project
 
 Beginner level project in C++ - a zoo system, where you can add, remove or breed animals and keep information about them.
+
+![](linebreak.png)
+
+## producer-consumer
+
+Producer consumer problem - solution written in C.
 
 ![](linebreak.png)
